@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="amaze-components">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `amaze-components`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class AmazeComponents extends Polymer.Element {
+      static get is() { return 'amaze-components'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'amaze-components'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(AmazeComponents.is, AmazeComponents);
+  </script>
+</dom-module>
