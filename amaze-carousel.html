@@ -1,0 +1,108 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="amaze-carousel">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+        overflow: hidden;
+      }
+
+      div>::slotted(:not([selected])) {
+        display: none;
+      }
+
+    </style>
+    <div id="slides">
+      <slot></slot>
+    </div>
+
+    <slot id="prevBtn" name="prevBtn" on-click="previous" ></slot>
+    <slot id="nextBtn" name="nextBtn" on-click="next"></slot>
+    <!-- <button id="prevBtn" on-click="previous" slot="prevBtn">&#x276E;</button>
+    <button id="nextBtn" on-click="next" slot="nextBtn">&#x276F;</button> -->
+
+
+  </template>
+
+  <script>
+    /**
+     * `amaze-corousel`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class AmazeCarousel extends Polymer.Element {
+      static get is() {
+        return 'amaze-carousel';
+      }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'amaze-carousel'
+          },
+
+          selected: {
+            type: Object,
+            observer: '_selectedChanged'
+          }
+        };
+      }
+      _resetSelected() {
+        if (this.firstElementChild) {
+          this.firstElementChild.setAttribute('selected', '');
+        }
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        this.shadowRoot.addEventListener('slotchange', this._resetSelected.bind(this));
+        this._resetSelected();
+      }
+
+      _selectedChanged(selected, oldSelected) {
+        if (oldSelected) oldSelected.removeAttribute('selected');
+        if (selected) selected.setAttribute('selected', '');
+      }
+
+      _resetSelected() {
+        if (!this.selected || this.selected.parentElement !== this) {
+          this.selected = this.firstElementChild;
+        }
+      }
+
+    previous() {
+      const elem = this.selected && this.selected.previousElementSibling;
+      if (elem) {
+        this.selected = elem;
+      }
+    }
+
+    next() {
+      const elem = this.selected && this.selected.nextElementSibling;
+      if (elem) {
+        this.selected = elem;
+      }
+    }
+
+    _selectedChanged(selected, oldSelected) {
+      if (oldSelected) oldSelected.removeAttribute('selected');
+      if (selected) selected.setAttribute('selected', '');
+
+      if (selected) {
+        this.$.prevBtn.disabled = !selected.previousElementSibling;
+        this.$.nextBtn.disabled = !selected.nextElementSibling;
+      } else {
+        this.$.prevBtn.disabled = true;
+        this.$.nextBtn.disabled = true;
+      }
+    }
+  }
+    window.customElements.define(AmazeCarousel.is, AmazeCarousel);
+  </script>
+</dom-module>
