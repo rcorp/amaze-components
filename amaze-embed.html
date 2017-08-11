@@ -1,0 +1,39 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="amaze-embed">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <div>
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * `amaze-embed`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class AmazeEmbed extends Polymer.Element {
+      static get is() {
+        return 'amaze-embed';
+      }
+      static get properties() {
+        return {
+          embed-code : {
+            type: string,
+            observe : _snippetAdded
+          }
+        };
+      }
+    }
+    window.customElements.define(AmazeCarousel.is, AmazeCarousel);
+  </script>
+</dom-module>
