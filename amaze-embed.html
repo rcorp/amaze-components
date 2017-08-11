@@ -7,7 +7,7 @@
       display: block;
     }
     </style>
-    <div>
+    <div id="embedCodeDiv">
     </div>
 
   </template>
@@ -27,13 +27,21 @@
       }
       static get properties() {
         return {
-          embed-code : {
-            type: string,
-            observe : _snippetAdded
+          embedcode : {
+            type: String,
+            observer: '_embedCode'
           }
         };
       }
+
+      _embedCode() {
+        var self = this;
+        if ((this.embedcode != null) && (this.embedcode != undefined)) {
+          // var embedCode = (this.embedcode).substring(1, this.embedcode.length - 1);
+          this.shadowRoot.querySelector('#embedCodeDiv').innerHTML = this.embedcode;
+        }
+      }
     }
-    window.customElements.define(AmazeCarousel.is, AmazeCarousel);
+    window.customElements.define(AmazeEmbed.is, AmazeEmbed);
   </script>
 </dom-module>
