@@ -3,9 +3,9 @@
 <dom-module id="amaze-embed">
   <template>
     <style>
-    :host {
-      display: block;
-    }
+      :host {
+        display: block;
+      }
     </style>
     <div id="embedCodeDiv">
     </div>
@@ -13,6 +13,7 @@
   </template>
 
   <script>
+
     /**
      * `amaze-embed`
      *
@@ -27,7 +28,7 @@
       }
       static get properties() {
         return {
-          embedcode : {
+          embedcode: {
             type: String,
             observer: '_embedCode'
           }
@@ -37,8 +38,13 @@
       _embedCode() {
         var self = this;
         if ((this.embedcode != null) && (this.embedcode != undefined)) {
-          // var embedCode = (this.embedcode).substring(1, this.embedcode.length - 1);
           this.shadowRoot.querySelector('#embedCodeDiv').innerHTML = this.embedcode;
+          if (this.shadowRoot.querySelector('#embedCodeDiv').getElementsByTagName('script')) {
+            var arr = this.shadowRoot.querySelector('#embedCodeDiv').getElementsByTagName('script')
+            for (var n = 0; n < arr.length; n++) {
+              eval(arr[n].innerHTML)
+            }
+          }
         }
       }
     }
