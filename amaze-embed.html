@@ -1,0 +1,53 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="amaze-embed">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div id="embedCodeDiv">
+    </div>
+
+  </template>
+
+  <script>
+
+    /**
+     * `amaze-embed`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class AmazeEmbed extends Polymer.Element {
+      static get is() {
+        return 'amaze-embed';
+      }
+      static get properties() {
+        return {
+          embedcode: {
+            type: String,
+            observer: '_embedCode'
+          }
+        };
+      }
+
+      _embedCode() {
+        var self = this;
+        if ((this.embedcode != null) && (this.embedcode != undefined)) {
+          this.shadowRoot.querySelector('#embedCodeDiv').innerHTML = this.embedcode;
+          if (this.shadowRoot.querySelector('#embedCodeDiv').getElementsByTagName('script')) {
+            var arr = this.shadowRoot.querySelector('#embedCodeDiv').getElementsByTagName('script')
+            for (var n = 0; n < arr.length; n++) {
+              eval(arr[n].innerHTML)
+            }
+          }
+        }
+      }
+    }
+    window.customElements.define(AmazeEmbed.is, AmazeEmbed);
+  </script>
+</dom-module>
